@@ -51,8 +51,3 @@ class LoginViewModel(
         }
     }
 }
-
-interface LoginNavigator {
-
-    fun goToMainScreen()
-}

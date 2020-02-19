@@ -28,14 +28,6 @@ class App : Application() {
     }
 }
 
-interface StringProvider {
-    fun getString(@StringRes stringId: Int): String
-}
-
-class AndroidStringProvider(private val context: Context) : StringProvider {
-    override fun getString(stringId: Int) = context.getString(stringId)
-}
-
 val appModule = module {
     viewModel {
         LoginViewModel(
