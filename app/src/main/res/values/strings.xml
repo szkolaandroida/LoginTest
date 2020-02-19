@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LoginTest</string>
+
+    <string name="username_cant_be_empty">Username can\'t be empty!</string>
+    <string name="password_cant_be_empty">Password can\'t be empty!</string>
+    <string name="password_cant_be_too_short">Password can\'t be too short!</string>
+</resources>
