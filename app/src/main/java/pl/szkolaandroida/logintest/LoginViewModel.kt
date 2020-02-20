@@ -24,23 +24,32 @@ class LoginViewModel(
         usernameError.value = ""
         passwordError.value = ""
 
-        if (username.value!!.isEmpty()) {
-            usernameError.value = "username can't be empty"
+        val username = username.value!!
+        val password = password.value!!
+
+        if (username.isEmpty()) {
+            usernameError.value = stringProvider.getString(R.string.username_cant_be_empty)
         }
-        if (password.value!!.length < 4) {
+        if (password.length < 4) {
             passwordError.value = stringProvider.getString(R.string.password_cant_be_too_short)
         }
 
         if (usernameError.value!!.isEmpty() && passwordError.value!!.isEmpty()) {
+            performLogin(username, password)
+        }
+    }
 
-            viewModelScope.launch {
-                val response =
-                    loginApi.getLogin(username = username.value!!, password = password.value!!)
-                if (response.isSuccessful) {
-                    loginNavigator.goToMainScreen()
+    private fun performLogin(username: String, password: String) {
+        viewModelScope.launch {
+            val response = loginApi.getLogin(username, password)
+            if (response.isSuccessful) {
+                loginNavigator.goToMainScreen()
+            } else {
+                response.errorBody()?.let {
+                    val apiError: ApiError? = errorConverter.convert(it)
+                    passwordError.value = apiError?.error
                 }
             }
         }
-
     }
 }
